@@ -5,10 +5,14 @@ uEditor_django
 
 这个demo主要解决了django中集成uEditor,图片、视频、文件上传问题
 目前支持功能：
+<br />
 1.基本文字、排版等功能
+<br />
 2.图片上传、文件上传、视频上传功能
+<br />
 3.在线文件、在线图片功能
 
+<br />
 未实现功能：
 1.涂鸦功能
 2.网络图片功能
@@ -52,7 +56,7 @@ url(r'ueEditorControler','ueEditor_django.controller.handler')
 
 至此，配置工作完成，剩下的就是到页面上引用uEditor了，下面是一个简单的html页面，可根据uEditor放置位置调整脚本
 和样式的引用路径
-<!DOCTYPE html>
+<pre><code>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" type="text/css" href="/UE/third-party/SyntaxHighlighter/shCoreDefault.css">
@@ -70,3 +74,4 @@ SyntaxHighlighter.all();
     <script id="editor" type="text/plain" style="width:auto;height:500px;"></script>
 </body>
 </html>
+</code></pre>
