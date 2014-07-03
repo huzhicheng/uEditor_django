@@ -24,14 +24,14 @@ uEditor_django
     <pre><code>( r'^UE/(?P<path>.*)$','django.views.static.serve',
             { 'document_root':os.path.dirname(__file__).replace('\\','/')+"/UE"}),</code></pre>
  3. 将demo中ueconfig.json文件拷贝到自己项目的根目录中，并修改其中几处关键位置：
-    <code>将"imageUrlPrefix": "/upload/images/"修改为自己项目中图片上传后保存的位置，demo中是/upload/images/这个目录
+    <pre><code>将"imageUrlPrefix": "/upload/images/"修改为自己项目中图片上传后保存的位置，demo中是/upload/images/这个目录
     将"scrawlUrlPrefix": "/upload/images/", 修改为自己项目中涂鸦
     "snapscreenUrlPrefix": "/upload/images/", 截图保存位置
     "catcherUrlPrefix": "/upload/images/", 网络图片保存位置
     "videoUrlPrefix": "/upload/vedio/"   视频文件保存地址
     "fileUrlPrefix": "/upload/files/" 附件保存地址
     "imageManagerUrlPrefix": "/upload/onlineimages/", 在线图片所在位置，在线图片实际就是服务器为用户提供的可选图片
-    "fileManagerUrlPrefix": "/upload/onlinefiles/"  在线附件所在位置，在线附件实际就是服务器为用户提供的可选附件</code>
+    "fileManagerUrlPrefix": "/upload/onlinefiles/"  在线附件所在位置，在线附件实际就是服务器为用户提供的可选附件</code></pre>
  4. json文件修改后，要把上面设置的路径设置为静态资源目录，例如demo中全部保存到/upload/的子目录下，那么在urls.py中配置如下：
  <pre><code>( r'^upload/(?P<path>.*)$', 'django.views.static.serve',{ 'document_root': (os.path.dirname(__file__)+"/upload").replace('\\','/') }),</code></pre>之后，确保子目录是存在的，为了方便，程序里没有自动创建目录的方法，需要手工创建，例如demo中创建了images、vedio、
 files、onlinefiles、onlineimages几个子目录
@@ -62,3 +62,4 @@ files、onlinefiles、onlineimages几个子目录
         <script id="editor" type="text/plain" style="width:auto;height:500px;"></script>
     </body>
     </html>
+
