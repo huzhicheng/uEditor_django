@@ -40,7 +40,7 @@ files、onlinefiles、onlineimages几个子目录
 `url(r'ueEditorControler','ueEditor_django.controller.handler')`
 自己的项目中只需要将`ueEditor_django.controller.handler`改为`xxxx.controller.handler`即可
 
- 6. 配置工作最后一步，将`ueditor.config.js`文件的  `, `serverUrl: URL + "/net/controller.ashx"  修改为 `, serverUrl: "/ueEditorControler"`  即上一步配置的url路由
+ 6. 配置工作最后一步，将`ueditor.config.js`文件的  `, serverUrl: URL + "/net/controller.ashx"`  修改为 `, serverUrl: "/ueEditorControler"`  即上一步配置的url路由
 
 至此，配置工作完成，剩下的就是到页面上引用uEditor了，下面是一个简单的html页面，可根据uEditor放置位置调整脚本
 和样式的引用路径
