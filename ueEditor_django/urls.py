@@ -12,10 +12,10 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'ueTest','ueEditor_django.views.ueTest',{"template":"ueTest.html"}),
     url(r'ueEditorControler','ueEditor_django.controller.handler'),
-    ( r'^UE/(?P<path>.*)$', 'django.views.static.serve',
-            { 'document_root': (ROOT+"/UE").replace('\\','/') }
-    ),
-    ( r'^upload/(?P<path>.*)$', 'django.views.static.serve',
-            { 'document_root': (ROOT+"/upload").replace('\\','/') }
+        ( r'^UE/(?P<path>.*)$', 'django.views.static.serve',
+                { 'document_root': os.path.join(ROOT, "UE") }
+        ),
+        ( r'^upload/(?P<path>.*)$', 'django.views.static.serve',
+                { 'document_root': os.path.join(ROOT, "upload") }
     ),
 )
