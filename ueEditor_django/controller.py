@@ -7,6 +7,7 @@ import os
 from django.views.decorators.csrf import csrf_exempt
 import random
 from datetime import *
+import re
 
 ROOT = os.path.dirname(__file__)
 
@@ -25,10 +26,35 @@ def buildJsonResult(result):
 	jsondata = {"state":result.state,"url":result.url,"title":result.title,"original":result.original,"error":result.error}
 	return json.dumps(jsondata)
 
-def buildFileName(filename):
+def buildFileName(pathformat, filename):
+	"""
+		PathFormat处理
+	"""
+
 	dt = datetime.now()
 	name,ext = os.path.splitext(filename)
-	return dt.strftime("%Y%m%d%M%H%S{0}{1}".format(random.randint(1,999999),ext))
+
+	#创建替换字典
+	keys = ['{filename}', '{time}', '{yyyy}', '{yy}', '{mm}', '{dd}', '{hh}', '{ii}', '{ss}', ]
+	values = [name, '%H%M%S', '%Y', '%y', '%m', '%d', '%H', '%M', '%S', ]
+	texts = dict(zip(keys, values))
+
+	#遍历对应替换
+	format_text = pathformat
+	for key, value in texts.iteritems():
+		format_text = format_text.replace(key, value)
+
+	#处理随机数
+	regstr = r'{rand:(\d+?)}'
+	ms = re.search(regstr, format_text)
+	group = ms.group()
+	if group:
+		rand_length = int(ms.groups()[0]) #获取随机数字的长度
+		rand_number = random.randint(1, 10**rand_length -1) #生成随机数
+		rand_number = str(rand_number).zfill(rand_length)   #不足位数补0
+		format_text = format_text.replace(group, rand_number)
+
+	return dt.strftime(format_text) + ext
 
 #读取json文件
 def getConfigContent():
@@ -81,9 +107,15 @@ def uploadFile(request,config):
 
 		
 		try:
-			truelyName = buildFileName(filename)
+			truelyName = buildFileName(config.PathFormat, filename)
 			webUrl = config.SavePath+ truelyName
 			savePath =ROOT+webUrl
+
+			#判断文件夹是否存在，不存在则创建
+			folder, filename = os.path.split(savePath)
+			if not os.path.isdir(folder):
+				os.makedirs(folder)
+
 			f = codecs.open(savePath,"wb")
 			for chunk in buf.chunks():
 				f.write(chunk)
